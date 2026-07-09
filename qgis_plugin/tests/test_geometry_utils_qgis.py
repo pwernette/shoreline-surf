@@ -5,7 +5,7 @@ shapely-based module has, since QgsGeometry's own math is GEOS-backed."""
 import pytest
 from qgis.core import QgsGeometry, QgsPointXY
 
-from shoreline_uncertainty_qgis.geometry_utils_qgis import (
+from surf_qgis.geometry_utils_qgis import (
     dissolve,
     extract_vertices,
     vertex_nearest_stats,

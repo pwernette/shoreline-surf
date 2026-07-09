@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from shapely.geometry import LineString
 
-from shoreline_uncertainty.comparison import (
+from surf.comparison import (
     compare_professionals_pairwise,
     compare_to_professionals,
     professional_summary,

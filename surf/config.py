@@ -1,4 +1,4 @@
-"""Configuration loading and validation for the shoreline_uncertainty pipeline.
+"""Configuration loading and validation for the surf pipeline.
 
 Replaces the hardcoded site/year lists copy-pasted across nearly every script
 in original_program/arcgis_pro/ (e.g. `locations = ['alcona','allegan',

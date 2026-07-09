@@ -9,7 +9,7 @@ import pandas as pd
 import pytest
 from qgis.core import QgsGeometry, QgsPointXY, QgsVectorLayer
 
-from shoreline_uncertainty_qgis.transects_qgis import (
+from surf_qgis.transects_qgis import (
     Transect,
     build_baseline,
     generate_transects,
@@ -38,7 +38,7 @@ def _wavy_shoreline_layer():
 
 
 def test_compute_baseline_direction_horizontal_line():
-    from shoreline_uncertainty_qgis.transects_qgis import compute_baseline_direction
+    from surf_qgis.transects_qgis import compute_baseline_direction
 
     layer = _wavy_shoreline_layer()
     center, direction = compute_baseline_direction(layer)

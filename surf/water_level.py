@@ -1,29 +1,43 @@
-"""QGIS-native port of shoreline_uncertainty/water_level.py.
+"""Automatic water-level lookup via the NOAA CO-OPS Tides & Currents API.
 
-Automatic water-level lookup via the NOAA CO-OPS Tides & Currents API. Every
-function/class here except `site_lat_lon` is pure Python (dataclasses,
-`requests`, `json`, `math`, disk caching) with no geopandas/shapely/qgis
-dependency at all, so it is copied verbatim from the standalone module --
-same self-contained-duplication pattern as config_qgis.py/uncertainty_qgis.py.
+A single free, no-API-key REST service (https://api.tidesandcurrents.noaa.gov)
+covers both marine/coastal tide-gauge stations and Great Lakes water-level
+stations, which is what makes one module workable for both: given a site's
+location, find the nearest station (via the companion Metadata API), then
+pull either a date-specific water level (the level at the moment a shoreline
+was actually digitized from imagery/LiDAR -- a known source of horizontal
+position error, since the water line on the source shifts with lake/tide
+stage) or a year-level mean (a climate-normalization figure -- "was this an
+unusually high or low water year").
 
-`site_lat_lon` is the one function that touches vector data: the standalone
-version takes a GeoDataFrame and uses `gdf.to_crs(epsg=4326).unary_union.
-centroid`. This version takes a QgsVectorLayer instead and computes the
-centroid in the layer's own CRS first (via geometry_utils_qgis.dissolve,
-GEOS-backed unaryUnion -- the same operation `unary_union` performs), then
-reprojects just that single centroid point to EPSG:4326. This differs
-slightly from reprojecting every vertex before dissolving (the standalone
-order of operations), but for the purpose this function serves -- a
-representative point used only to pick the nearest CO-OPS station -- the
-difference is negligible, and transforming one point instead of every vertex
-of every feature is far cheaper.
+This module is intentionally decoupled from pipeline.run_pipeline: it makes
+live HTTP calls, which the rest of this package deliberately never does (see
+io_utils.py and the synthetic/Allegan test fixtures) so the core positional-
+uncertainty analysis stays deterministic, offline, and fast to test. Use it
+standalone, or via `python -m surf.cli water-levels
+--config ...` (cli.py), which writes one CSV row per shoreline year. Nothing
+here feeds back into uncertainty.py's RMSE_O automatically -- the three
+Wernette et al. (2017) components (base image, georeferencing, interpretation)
+don't include a water-level/tidal-datum term today, and folding a *measured*
+quantity into that *modeled* equation is a deliberate call left to the
+caller, not something this module should decide silently.
 
-This module is intentionally decoupled from pipeline_qgis.run_pipeline: it
-makes live HTTP calls, which the rest of this plugin deliberately never does
-(see io_utils_qgis.py and the synthetic test fixtures) so the core
-positional-uncertainty analysis stays deterministic, offline, and fast to
-test. See shoreline_uncertainty/water_level.py's module docstring for the
-full Great-Lakes-vs-marine product/datum rationale -- unchanged here.
+Great Lakes vs. marine differences that drive the product/datum choices
+below (see the CO-OPS Data API and Metadata API docs):
+    - Datums: Great Lakes stations commonly use IGLD (International Great
+      Lakes Datum) or LWD (Low Water Datum); marine stations commonly use
+      MSL, MLLW, NAVD, etc. There is no single datum valid everywhere, so
+      the default here is picked per-station from its `greatlakes` flag.
+    - Products: `daily_mean` is Great-Lakes-only and requires
+      `time_zone=lst`; `hourly_height` (verified, historical-depth) is the
+      marine equivalent at a similar granularity. `monthly_mean` is the one
+      product published for both regions and is used here for year-level
+      lookups.
+    - Coverage: digital CO-OPS records generally start in the 1970s-90s even
+      where a station has operated much longer; very old shoreline dates
+      (e.g. 1938 imagery) may simply have no station data available. Callers
+      should be ready for WaterLevelError on old dates rather than assuming
+      coverage.
 """
 from __future__ import annotations
 
@@ -35,16 +49,13 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
+import geopandas as gpd
 import requests
-from qgis.core import QgsCoordinateReferenceSystem, QgsCoordinateTransform, QgsProject, QgsVectorLayer
-
-from .geometry_utils_qgis import dissolve
-from .io_utils_qgis import layer_geometries
 
 MDAPI_STATIONS_URL = "https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json"
 DATAGETTER_URL = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
-APPLICATION_NAME = "shoreline_uncertainty"
-DEFAULT_STATION_CACHE = Path.home() / ".cache" / "shoreline_uncertainty" / "coops_stations.json"
+APPLICATION_NAME = "surf"
+DEFAULT_STATION_CACHE = Path.home() / ".cache" / "surf" / "coops_stations.json"
 
 _EARTH_RADIUS_NM = 3440.065  # mean Earth radius in nautical miles
 
@@ -98,24 +109,14 @@ def _haversine_nm(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     return 2 * _EARTH_RADIUS_NM * math.asin(math.sqrt(a))
 
 
-def site_lat_lon(layer: QgsVectorLayer) -> tuple[float, float]:
+def site_lat_lon(gdf: gpd.GeoDataFrame) -> tuple[float, float]:
     """Representative (lat, lon) for a site, derived from the centroid of a
-    QgsVectorLayer's geometries (e.g. a shoreline or baseline) -- so callers
+    GeoDataFrame's geometry (e.g. a shoreline or baseline) -- so callers
     never need to hand-enter a site's coordinates just to look up the
-    nearest water-level station. Dissolves all features in the layer's own
-    CRS, takes the centroid, then reprojects that single point to
-    EPSG:4326 regardless of the input CRS."""
-    merged = dissolve(layer_geometries(layer))
-    centroid = merged.centroid()
-
-    dst_crs = QgsCoordinateReferenceSystem("EPSG:4326")
-    src_crs = layer.crs()
-    if src_crs != dst_crs:
-        transform = QgsCoordinateTransform(src_crs, dst_crs, QgsProject.instance())
-        centroid.transform(transform)
-
-    pt = centroid.asPoint()
-    return pt.y(), pt.x()  # (lat, lon)
+    nearest water-level station. Reprojects to EPSG:4326 first regardless of
+    the input CRS."""
+    centroid = gdf.to_crs(epsg=4326).unary_union.centroid
+    return centroid.y, centroid.x  # (lat, lon)
 
 
 def fetch_station_list(

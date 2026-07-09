@@ -7,7 +7,7 @@ import pytest
 from pyproj import CRS
 from shapely.geometry import LineString
 
-from shoreline_uncertainty.io_utils import ensure_projected, read_shoreline, utm_epsg_for, write_vector
+from surf.io_utils import ensure_projected, read_shoreline, utm_epsg_for, write_vector
 
 
 def _geographic_gdf():

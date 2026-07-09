@@ -15,8 +15,8 @@ import pytest
 import yaml
 from shapely.geometry import Point
 
-from shoreline_uncertainty import water_level as wl
-from shoreline_uncertainty.cli import _run_water_levels
+from surf import water_level as wl
+from surf.cli import _run_water_levels
 
 
 # ---------------------------------------------------------------------------
@@ -279,8 +279,8 @@ def test_run_water_levels_cli_writes_csv_for_annual_and_date_specific(monkeypatc
         period_start="2010-07-04", period_end="2010-07-04", n_observations=24, fallback_used=None,
     )
 
-    monkeypatch.setattr("shoreline_uncertainty.cli.get_annual_water_level", lambda *a, **k: annual_result)
-    monkeypatch.setattr("shoreline_uncertainty.cli.get_water_level", lambda *a, **k: date_result)
+    monkeypatch.setattr("surf.cli.get_annual_water_level", lambda *a, **k: annual_result)
+    monkeypatch.setattr("surf.cli.get_water_level", lambda *a, **k: date_result)
 
     args = argparse.Namespace(
         config=str(config_path), out=None, datum=None, window_days=0, sleep=0.0,
@@ -321,7 +321,7 @@ def test_run_water_levels_cli_records_error_without_aborting(monkeypatch, synthe
     def _boom(*a, **k):
         raise wl.WaterLevelError("no station nearby")
 
-    monkeypatch.setattr("shoreline_uncertainty.cli.get_annual_water_level", _boom)
+    monkeypatch.setattr("surf.cli.get_annual_water_level", _boom)
 
     args = argparse.Namespace(
         config=str(config_path), out=str(tmp_path / "wl.csv"), datum=None, window_days=0, sleep=0.0,

@@ -1,5 +1,5 @@
 """Injects the shapely/GEOS-backed `qgis` stub (qgis_stub.py) into
-sys.modules before any test imports `shoreline_uncertainty_qgis` modules --
+sys.modules before any test imports `surf_qgis` modules --
 this sandbox has no real QGIS install, so `import qgis.core` would
 otherwise fail outright. See qgis_stub.py's module docstring for why this
 exists and what it does/doesn't validate.
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 _TESTS_DIR = Path(__file__).resolve().parent
-_PLUGIN_DIR = _TESTS_DIR.parent  # qgis_plugin/ -- parent of shoreline_uncertainty_qgis/
+_PLUGIN_DIR = _TESTS_DIR.parent  # qgis_plugin/ -- parent of surf_qgis/
 
 for p in (str(_PLUGIN_DIR), str(_TESTS_DIR)):
     if p not in sys.path:

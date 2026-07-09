@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/raster_output.py.
+"""QGIS-native port of surf/raster_output.py.
 
 Raster (gridded) uncertainty / similarity-index surfaces.
 

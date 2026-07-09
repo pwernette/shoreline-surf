@@ -1,8 +1,8 @@
-# Migration guide: original_program/arcgis_pro/ -> shoreline_uncertainty
+# Migration guide: original_program/arcgis_pro/ -> surf
 
 This maps every script in `original_program/arcgis_pro/` (unchanged,
 arcpy-dependent, kept for historical reference) to the module/function in the
-new `shoreline_uncertainty` package that replaces it, plus what changed and
+new `surf` package that replaces it, plus what changed and
 why. None of the original files were modified.
 
 | Original script | New module / function | Notes |
@@ -21,7 +21,7 @@ why. None of the original files were modified.
 | `raster_buffers_analysis.py` | `raster_output.py` -- `build_similarity_surface`, `rasterize_geometry`, `write_raster` | Despite its name, the original performed **no raster cell math** -- it only unioned vector buffer polygons (`Union_analysis ... ONLY_FID`) and counted overlaps as a `Similarity_Index` attribute on the resulting *vector* polygons. This is replaced with genuine raster math via `rasterio.features.rasterize`: a `Similarity_Index` GeoTIFF (count of overlapping per-year-pair uncertainty buffers per cell) and a `Significant_Change` GeoTIFF (1 where a significant pair's footprint falls outside its own overlap region), in the spirit of the spatially-variable uncertainty concept in Wernette et al. (2020). |
 | `professional_comparison.py` | `comparison.py` -- `compare_to_professionals`, `compare_professionals_pairwise`, `professional_summary` | Original used `FeatureVerticesToPoints_management` + `Near_analysis` + `Statistics_analysis` to get min/mean/max nearest-vertex distance between two shorelines, producing `_meTOprof`, `_profTOprof`, and a running `_professional_summary` table. Same three outputs are reproduced here, with the vertex-distance statistic computed via `geometry_utils.vertex_nearest_stats` (shapely). The hardcoded `professionals = ['acmoody','goodwin','lusch']` list is now a per-site `professionals` config list (any names, any count). |
 | *(per-script copy-pasted)* `locations = ['alcona','allegan','manistee','sanilac']` + per-site year lists | `config.py` (`RunConfig`, `SiteConfig`, `ShorelineYear`, `ProfessionalDelineation`, `load_config`, `validate_config`) + `pipeline.py` (`run_site`, `run_pipeline`) | Every original script repeated its own copy of this hardcoded site/year list and a per-site processing block. Replaced with one YAML/JSON config and one generic, config-driven pipeline that works for any number of sites, years, and file paths -- adding a new site means editing the config, not the code. |
-| *(none -- new)* | `cli.py` | A `shoreline-uncertainty run --config <path>` command-line entry point; the original toolbox only ran from within ArcGIS Pro's Python window/toolbox UI. |
+| *(none -- new)* | `cli.py` | A `surf run --config <path>` command-line entry point; the original toolbox only ran from within ArcGIS Pro's Python window/toolbox UI. |
 
 ## Key behavioral notes carried over deliberately
 
@@ -37,7 +37,7 @@ why. None of the original files were modified.
 - **No arcpy, anywhere.** All vector I/O and geometry operations use
   geopandas/shapely/pyproj/pyogrio (wrapping GDAL/OGR); all raster output
   uses rasterio. `original_program/arcgis_pro/` is left untouched as a
-  reference and is not imported by anything in `shoreline_uncertainty`.
+  reference and is not imported by anything in `surf`.
 
 ## What's new (not a 1:1 port)
 

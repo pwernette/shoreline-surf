@@ -11,7 +11,7 @@ the handful of `qgis.core` classes the ported modules actually call,
 backed by shapely/GEOS (the same geometry engine real `QgsGeometry` uses
 internally) and geopandas/pyproj for the vector-layer/CRS pieces.
 `conftest.py` installs it into `sys.modules` before any test imports
-`shoreline_uncertainty_qgis`.
+`surf_qgis`.
 
 **What passing these tests confirms:** the math/algorithm logic (buffer
 overlap ratios, vertex-distance stats, CRS auto-detection, reprojection,

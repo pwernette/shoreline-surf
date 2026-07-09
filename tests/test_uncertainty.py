@@ -2,8 +2,8 @@ import math
 
 import pytest
 
-from shoreline_uncertainty.config import ShorelineYear, UncertaintyComponents
-from shoreline_uncertainty.uncertainty import (
+from surf.config import ShorelineYear, UncertaintyComponents
+from surf.uncertainty import (
     assign_uncertainty,
     compute_uncertainty_radius,
     resolve_uncertainty_radius,
@@ -65,7 +65,7 @@ def test_resolve_uncertainty_radius_missing_everything():
 
 
 def test_assign_uncertainty_for_site():
-    from shoreline_uncertainty.config import SiteConfig
+    from surf.config import SiteConfig
 
     site = SiteConfig(
         name="test",

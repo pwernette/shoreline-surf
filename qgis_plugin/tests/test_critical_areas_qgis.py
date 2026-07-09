@@ -3,7 +3,7 @@ shapely-backed qgis stub. Mirrors tests/test_critical_areas.py, adapted to
 read a QgsVectorLayer instead of a GeoDataFrame for the segments output."""
 from qgis.core import QgsGeometry, QgsPointXY
 
-from shoreline_uncertainty_qgis.critical_areas_qgis import identify_critical_areas
+from surf_qgis.critical_areas_qgis import identify_critical_areas
 
 
 def _line(coords):

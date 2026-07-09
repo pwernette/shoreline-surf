@@ -5,7 +5,7 @@ import pandas as pd
 import pytest
 from shapely.geometry import LineString, Point
 
-from shoreline_uncertainty.transects import (
+from surf.transects import (
     Transect,
     _corner_key,
     build_baseline,

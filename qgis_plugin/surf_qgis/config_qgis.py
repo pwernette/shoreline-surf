@@ -1,11 +1,11 @@
 """Configuration loading and validation for the QGIS plugin's pipeline.
 
-Verbatim copy of shoreline_uncertainty/config.py: this module has zero
+Verbatim copy of surf/config.py: this module has zero
 geopandas/shapely/qgis dependency (pure dataclasses + yaml/json), so rather
 than make the qgis_plugin package depend on the separate standalone
-shoreline_uncertainty package being installed in QGIS's Python environment,
+surf package being installed in QGIS's Python environment,
 the same code is duplicated here so the plugin stays fully self-contained.
-See shoreline_uncertainty/config.py for the full original docstrings/design
+See surf/config.py for the full original docstrings/design
 notes -- replaces the hardcoded site/year lists copy-pasted across nearly
 every script in original_program/arcgis_pro/ with a single YAML or JSON run
 configuration that works for any number of sites, years, and shapefiles.

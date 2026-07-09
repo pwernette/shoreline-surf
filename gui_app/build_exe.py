@@ -11,13 +11,13 @@ From the repo root::
 
     python gui_app/build_exe.py
 
-Output lands in dist_exe/ShorelineUncertainty/ as a folder containing the
+Output lands in dist_exe/SURF/ as a folder containing the
 binary plus all dependencies.  To launch:
 
-    Linux / macOS : dist_exe/ShorelineUncertainty/ShorelineUncertainty
-    Windows       : dist_exe\\ShorelineUncertainty\\ShorelineUncertainty.exe
+    Linux / macOS : dist_exe/SURF/SURF
+    Windows       : dist_exe\\SURF\\SURF.exe
 
-Distribute the entire dist_exe/ShorelineUncertainty/ folder (zip it up, or use
+Distribute the entire dist_exe/SURF/ folder (zip it up, or use
 an installer tool such as NSIS on Windows or AppImage on Linux).
 
 Note: dist_exe/ is intentionally separate from dist_pypi/ (PyPI wheel/sdist
@@ -59,7 +59,7 @@ ROOT = Path(__file__).parent.parent
 # package.  Use this (not --hidden-import) for local packages and for
 # packages like rasterio/pyproj that ship binary data alongside their Python.
 COLLECT_ALL = [
-    "shoreline_uncertainty",   # the analysis package -- local, must be collected
+    "surf",   # the analysis package -- local, must be collected
     "rasterio",                # ships gdal-data/ inside the package directory
     "pyproj",                  # ships its PROJ database inside the package directory
     "geopandas",
@@ -126,7 +126,7 @@ exclude_args = []
 for e in EXCLUDE:
     exclude_args += ["--exclude-module", e]
 
-FINAL_DIST = ROOT / "dist_exe" / "ShorelineUncertainty"
+FINAL_DIST = ROOT / "dist_exe" / "SURF"
 
 
 def _force_remove(path: Path) -> None:
@@ -163,7 +163,7 @@ with tempfile.TemporaryDirectory(prefix="pyi_build_") as tmp_root:
         "--onedir",                     # folder bundle -- no 4 GB archive limit
         "--windowed",                   # suppress console window on Windows/macOS
         "--noconfirm",                  # no interactive prompt
-        "--name", "ShorelineUncertainty",
+        "--name", "SURF",
         "--distpath", str(tmp_dist),    # output stays in temp
         "--workpath", str(tmp_work),    # intermediate files stay in temp
         *collect_args,
@@ -176,12 +176,12 @@ with tempfile.TemporaryDirectory(prefix="pyi_build_") as tmp_root:
     print(f"(all build files -> {tmp_root})")
     subprocess.run(cmd, check=True)
 
-    src = tmp_dist / "ShorelineUncertainty"
+    src = tmp_dist / "SURF"
     print(f"\nCopying {src} -> {FINAL_DIST} ...")
     _force_remove(FINAL_DIST)
     shutil.copytree(src, FINAL_DIST)
 
 print("\nBuild complete.")
-print(f"Folder : dist_exe/ShorelineUncertainty/")
+print(f"Folder : dist_exe/SURF/")
 ext = ".exe" if sys.platform == "win32" else ""
-print(f"Launch : dist_exe/ShorelineUncertainty/ShorelineUncertainty{ext}")
+print(f"Launch : dist_exe/SURF/SURF{ext}")

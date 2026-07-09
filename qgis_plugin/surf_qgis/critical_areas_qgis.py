@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/critical_areas.py.
+"""QGIS-native port of surf/critical_areas.py.
 
 Identify and export shoreline segments experiencing significant change.
 

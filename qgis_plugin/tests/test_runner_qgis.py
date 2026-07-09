@@ -13,8 +13,8 @@ from __future__ import annotations
 import pytest
 from qgis.core import QgsProcessingException, QgsProject, QgsRasterLayer, QgsVectorLayer
 
-from shoreline_uncertainty_qgis.config_qgis import RunConfig, ShorelineYear, SiteConfig
-from shoreline_uncertainty_qgis.runner import execute_run_config
+from surf_qgis.config_qgis import RunConfig, ShorelineYear, SiteConfig
+from surf_qgis.runner import execute_run_config
 
 
 def _build_run_config(synthetic_site, output_dir, sites=None):

@@ -1,4 +1,4 @@
-# Example run configuration for shoreline_uncertainty -- WITH a `professionals`
+# Example run configuration for surf -- WITH a `professionals`
 # block (independent/inter-analyst shoreline comparison enabled).
 #
 # This points at the synthetic shapefiles produced by
@@ -11,7 +11,7 @@
 #
 # Run with:
 #   python examples/generate_synthetic_data.py
-#   python -m shoreline_uncertainty.cli run --config examples/config_with_professionals.yaml
+#   python -m surf.cli run --config examples/config_with_professionals.yaml
 
 output_dir: examples/output_with_professionals
 

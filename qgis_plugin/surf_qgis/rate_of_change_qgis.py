@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/rate_of_change.py.
+"""QGIS-native port of surf/rate_of_change.py.
 
 End Point Rate (EPR) and Linear Regression Rate (LRR) shoreline
 change-rate statistics -- the standard DSAS (Digital Shoreline Analysis

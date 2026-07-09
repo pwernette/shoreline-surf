@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/transects.py.
+"""QGIS-native port of surf/transects.py.
 
 Replaces, in combination, the same original arcpy scripts the standalone
 module replaces (Cast_Transects.py, extract_intersected_points.py,

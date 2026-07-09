@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/pipeline.py.
+"""QGIS-native port of surf/pipeline.py.
 
 End-to-end orchestration: load a config, run every analysis stage for every
 site, and write all outputs -- same per-site stage structure as the

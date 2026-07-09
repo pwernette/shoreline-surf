@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/probability_surface.py.
+"""QGIS-native port of surf/probability_surface.py.
 
 Probability-surface and "probability of real change" analysis for
 horizontal shoreline position uncertainty.

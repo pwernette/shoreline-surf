@@ -11,13 +11,13 @@ import pandas as pd
 import pytest
 from shapely.geometry import LineString
 
-from shoreline_uncertainty.rate_of_change import (
+from surf.rate_of_change import (
     build_rate_change_polygons,
     compute_rate_of_change,
     end_point_rate,
     linear_regression_rate,
 )
-from shoreline_uncertainty.transects import Transect
+from surf.transects import Transect
 
 
 def _wide_table(rows, years):

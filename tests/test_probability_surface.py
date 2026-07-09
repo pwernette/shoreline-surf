@@ -19,7 +19,7 @@ from scipy import integrate
 from scipy.stats import norm
 from shapely.geometry import LineString
 
-from shoreline_uncertainty.probability_surface import (
+from surf.probability_surface import (
     change_probability_raster,
     change_probability_table,
     gaussian_overlap_probability,
@@ -30,8 +30,8 @@ from shoreline_uncertainty.probability_surface import (
     shoreline_change_probability_segments,
     signed_distance_raster,
 )
-from shoreline_uncertainty.raster_output import build_grid_transform
-from shoreline_uncertainty.transects import baseline_center_direction
+from surf.raster_output import build_grid_transform
+from surf.transects import baseline_center_direction
 
 
 def numeric_p_real(mu_a, sigma_a, mu_b, sigma_b):

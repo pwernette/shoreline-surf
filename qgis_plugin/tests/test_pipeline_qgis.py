@@ -20,10 +20,10 @@ import pandas as pd
 import pytest
 import rasterio
 
-from shoreline_uncertainty_qgis import io_utils_qgis as io_utils
-from shoreline_uncertainty_qgis.config_qgis import RunConfig, ShorelineYear, SiteConfig
-from shoreline_uncertainty_qgis.pipeline_qgis import run_pipeline
-from shoreline_uncertainty_qgis.transects_qgis import Transect, nearest_transect_net_distance
+from surf_qgis import io_utils_qgis as io_utils
+from surf_qgis.config_qgis import RunConfig, ShorelineYear, SiteConfig
+from surf_qgis.pipeline_qgis import run_pipeline
+from surf_qgis.transects_qgis import Transect, nearest_transect_net_distance
 
 
 def _build_run_config(
@@ -297,7 +297,7 @@ def test_run_pipeline_perkal_writes_critical_areas(synthetic_site, tmp_path):
 
 
 def test_run_pipeline_with_professionals_writes_comparison_tables(synthetic_site, synthetic_professionals, tmp_path):
-    from shoreline_uncertainty_qgis.config_qgis import ProfessionalDelineation
+    from surf_qgis.config_qgis import ProfessionalDelineation
 
     output_dir = tmp_path / "pipeline_out_prof"
     professionals = [

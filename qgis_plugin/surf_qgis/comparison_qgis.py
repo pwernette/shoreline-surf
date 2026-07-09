@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/comparison.py.
+"""QGIS-native port of surf/comparison.py.
 
 Identical logic to the standalone module -- the only geometry operation
 involved is `vertex_nearest_stats` (min/mean/max nearest-vertex distance

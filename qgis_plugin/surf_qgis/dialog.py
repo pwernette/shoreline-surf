@@ -10,7 +10,7 @@ Two ways to configure a run, in one dialog:
     config_qgis.load_config to populate the single-site tabs from its first
     site, or save the dialog's current state out to a config file -- so the
     same config files work interchangeably between the CLI
-    (shoreline_uncertainty package) and this plugin.
+    (surf package) and this plugin.
 
 This dialog only *builds* a validated RunConfig (self.run_config, set when
 the user accepts the dialog); it does not execute the pipeline or touch the
@@ -186,7 +186,7 @@ def write_run_config(run: RunConfig, path: str | Path) -> None:
     """Serialize a RunConfig back out to a YAML/JSON file, mirroring
     config_qgis.load_config's expected structure exactly so the written
     file round-trips through load_config (and therefore through the CLI's
-    shoreline_uncertainty.config.load_config too, since both are the same
+    surf.config.load_config too, since both are the same
     schema). Used by the dialog's "Save config file..." button, and usable
     standalone."""
     import json
@@ -404,7 +404,7 @@ class ShorelineUncertaintyDialog(QDialog):
         layout = QVBoxLayout(widget)
         layout.addWidget(QLabel(
             "Load an existing YAML/JSON run configuration (as used by the "
-            "shoreline_uncertainty CLI) to populate the tabs above from that "
+            "surf CLI) to populate the tabs above from that "
             "config's first site, or save the current dialog state out to a "
             "config file. Loading a multi-site config only populates this "
             "dialog's single-site fields -- use the CLI directly for true "

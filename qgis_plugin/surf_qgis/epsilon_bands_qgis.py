@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/epsilon_bands.py.
+"""QGIS-native port of surf/epsilon_bands.py.
 
 Same two positional-uncertainty significance-testing methods, same
 docstrings/behavioral notes -- ported from original_program/arcgis_pro the

@@ -8,13 +8,13 @@ from __future__ import annotations
 
 from qgis.core import QgsApplication
 
-from shoreline_uncertainty_qgis.processing_algorithm import RunAnalysisAlgorithm, WaterLevelLookupAlgorithm
-from shoreline_uncertainty_qgis.processing_provider import ShorelineUncertaintyProvider
+from surf_qgis.processing_algorithm import RunAnalysisAlgorithm, WaterLevelLookupAlgorithm
+from surf_qgis.processing_provider import ShorelineUncertaintyProvider
 
 
 def test_provider_id_and_name():
     provider = ShorelineUncertaintyProvider()
-    assert provider.id() == "shoreline_uncertainty"
+    assert provider.id() == "surf"
     assert provider.name() == "Shoreline Change Uncertainty"
 
 
@@ -28,7 +28,7 @@ def test_provider_load_algorithms_registers_both_algorithms():
 
 
 def test_plugin_registers_provider_with_processing_registry():
-    from shoreline_uncertainty_qgis.plugin import ShorelineUncertaintyPlugin
+    from surf_qgis.plugin import ShorelineUncertaintyPlugin
 
     plugin = ShorelineUncertaintyPlugin(iface=None)
     plugin._register_processing_provider()

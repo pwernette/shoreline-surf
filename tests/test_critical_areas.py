@@ -1,6 +1,6 @@
 from shapely.geometry import LineString
 
-from shoreline_uncertainty.critical_areas import identify_critical_areas
+from surf.critical_areas import identify_critical_areas
 
 
 def test_identify_critical_areas_only_year_lt_k():

@@ -3,18 +3,18 @@
 Usage
 -----
     # Run the full pipeline (--config defaults to config.yaml in the cwd)
-    shoreline-uncertainty run
-    shoreline-uncertainty run --config path/to/config.yaml
+    surf run
+    surf run --config path/to/config.yaml
 
     # Look up NOAA water levels for every shoreline year
-    shoreline-uncertainty water-levels
-    shoreline-uncertainty water-levels --config path/to/config.yaml
+    surf water-levels
+    surf water-levels --config path/to/config.yaml
 
     # Launch the tkinter GUI
-    shoreline-uncertainty gui
+    surf gui
 
     # Show help
-    shoreline-uncertainty
+    surf
 """
 from __future__ import annotations
 
@@ -56,7 +56,7 @@ def _resolve_config(config_arg: str | None, parser: argparse.ArgumentParser) -> 
     parser.error(
         "no --config argument given and no config.yaml / config.yml found in "
         f"the current directory ({Path.cwd()}).\n"
-        "  Usage: shoreline-uncertainty run --config path/to/config.yaml"
+        "  Usage: surf run --config path/to/config.yaml"
     )
 
 
@@ -81,15 +81,15 @@ def main(argv=None):
         ``python3-tk`` on Linux; bundled on Windows and macOS.
     """
     parser = argparse.ArgumentParser(
-        prog="shoreline-uncertainty",
-        description="Shoreline change analysis with positional uncertainty.",
+        prog="surf",
+        description="SURF: Shoreline Uncertainty and Rate Framework — shoreline change analysis with positional uncertainty.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "examples:\n"
-            "  shoreline-uncertainty run                          # uses config.yaml in cwd\n"
-            "  shoreline-uncertainty run --config my.yaml\n"
-            "  shoreline-uncertainty water-levels --config my.yaml\n"
-            "  shoreline-uncertainty gui\n"
+            "  surf run                          # uses config.yaml in cwd\n"
+            "  surf run --config my.yaml\n"
+            "  surf water-levels --config my.yaml\n"
+            "  surf gui\n"
         ),
     )
     # Not required=True — no subcommand prints help instead of erroring.

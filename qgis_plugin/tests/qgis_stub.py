@@ -14,7 +14,7 @@ validation against the real API needs a load-and-run check in actual QGIS.
 See qgis_plugin/tests/README.md.
 
 Usage: call `install()` once per test session (a conftest.py fixture does
-this) before importing anything from `shoreline_uncertainty_qgis`.
+this) before importing anything from `surf_qgis`.
 """
 from __future__ import annotations
 
@@ -1011,12 +1011,12 @@ def install() -> None:
     `from qgis.core import ...` / `from qgis.PyQt import ...` resolve here
     instead of raising ModuleNotFoundError. Idempotent."""
     if isinstance(sys.modules.get("qgis"), types.ModuleType) and getattr(
-        sys.modules["qgis"], "_is_shoreline_uncertainty_stub", False
+        sys.modules["qgis"], "_is_surf_stub", False
     ):
         return
 
     qgis_pkg = types.ModuleType("qgis")
-    qgis_pkg._is_shoreline_uncertainty_stub = True
+    qgis_pkg._is_surf_stub = True
 
     core_mod = types.ModuleType("qgis.core")
     for name, obj in _CORE_EXPORTS.items():
@@ -1047,7 +1047,7 @@ def install() -> None:
     sys.modules["qgis.PyQt.QtWidgets"] = qtwidgets_mod
 
     osgeo_pkg = types.ModuleType("osgeo")
-    osgeo_pkg._is_shoreline_uncertainty_stub = True
+    osgeo_pkg._is_surf_stub = True
     gdal_mod = types.ModuleType("osgeo.gdal")
     ogr_mod = types.ModuleType("osgeo.ogr")
     osr_mod = types.ModuleType("osgeo.osr")

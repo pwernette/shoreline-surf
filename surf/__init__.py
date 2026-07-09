@@ -1,10 +1,9 @@
-"""shoreline_uncertainty: arcpy-free reimplementation of the analysis behind
-Wernette et al. (2017), "Accounting for positional uncertainty in historical
-shoreline change analysis without ground reference information."
+"""SURF: Shoreline Uncertainty and Rate Framework.
 
-Built entirely on geopandas/shapely/pyproj (vector core, wrapping GDAL/OGR)
-plus rasterio (gridded uncertainty/similarity-index surfaces) -- no ESRI
-ArcGIS / arcpy dependency anywhere in this package.
+Arcpy-free implementation of the shoreline change uncertainty methods
+described in Wernette et al. (2017) and Wernette et al. (2020). Built
+entirely on geopandas/shapely/pyproj (vector core) and rasterio (raster
+surfaces) -- no ESRI ArcGIS/arcpy dependency anywhere in this package.
 
 See MIGRATION.md for a map of each original original_program/arcgis_pro/*.py
 script to its replacement here.

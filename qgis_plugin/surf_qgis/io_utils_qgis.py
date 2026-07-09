@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/io_utils.py.
+"""QGIS-native port of surf/io_utils.py.
 
 Reading/reprojecting/writing vector data via `qgis.core` (which wraps
 GDAL/OGR internally, the same library geopandas/Fiona/pyogrio wrap) instead

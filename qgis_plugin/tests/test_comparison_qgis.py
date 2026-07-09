@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 from qgis.core import QgsGeometry, QgsPointXY
 
-from shoreline_uncertainty_qgis.comparison_qgis import (
+from surf_qgis.comparison_qgis import (
     compare_professionals_pairwise,
     compare_to_professionals,
     professional_summary,

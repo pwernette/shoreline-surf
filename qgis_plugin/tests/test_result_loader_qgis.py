@@ -13,7 +13,7 @@ import rasterio
 from rasterio.transform import from_origin
 from shapely.geometry import Point
 
-from shoreline_uncertainty_qgis.result_loader import discover_output_files, load_output_layers
+from surf_qgis.result_loader import discover_output_files, load_output_layers
 
 
 def _write_shapefile(path, crs="EPSG:32616"):

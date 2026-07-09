@@ -3,7 +3,7 @@ import json
 import pytest
 import yaml
 
-from shoreline_uncertainty.config import (
+from surf.config import (
     RunConfig,
     ShorelineYear,
     SiteConfig,

@@ -5,9 +5,9 @@ prob_change probabilistic-surfaces variant of the Allegan data. Run after
 all three example configs have been executed:
 
     python examples/generate_synthetic_data.py
-    python -m shoreline_uncertainty.cli run --config examples/config_with_professionals.yaml
-    python -m shoreline_uncertainty.cli run --config examples/config_without_professionals.yaml
-    python -m shoreline_uncertainty.cli run --config examples/config_prob_change.yaml
+    python -m surf.cli run --config examples/config_with_professionals.yaml
+    python -m surf.cli run --config examples/config_without_professionals.yaml
+    python -m surf.cli run --config examples/config_prob_change.yaml
     python examples/make_screenshots.py
 
 All map-view figures use one consistent, minimalist "clean map" style: a

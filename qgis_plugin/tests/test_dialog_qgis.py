@@ -15,7 +15,7 @@ from __future__ import annotations
 import yaml
 import pytest
 
-from shoreline_uncertainty_qgis.dialog import ShorelineUncertaintyDialog, build_run_config, write_run_config
+from surf_qgis.dialog import ShorelineUncertaintyDialog, build_run_config, write_run_config
 
 
 def _base_kwargs(**overrides):
@@ -180,7 +180,7 @@ def test_build_run_config_bad_acquisition_date_format_raises():
 
 
 def test_write_run_config_round_trips_through_load_config(tmp_path):
-    from shoreline_uncertainty_qgis.config_qgis import load_config
+    from surf_qgis.config_qgis import load_config
 
     run = build_run_config(**_base_kwargs(
         baseline="baseline.shp",
@@ -203,7 +203,7 @@ def test_write_run_config_round_trips_through_load_config(tmp_path):
 
 
 def test_write_run_config_json_extension(tmp_path):
-    from shoreline_uncertainty_qgis.config_qgis import load_config
+    from surf_qgis.config_qgis import load_config
 
     run = build_run_config(**_base_kwargs())
     out_path = tmp_path / "config.json"
@@ -213,7 +213,7 @@ def test_write_run_config_json_extension(tmp_path):
 
 
 def test_write_run_config_preserves_uncertainty_components(tmp_path):
-    from shoreline_uncertainty_qgis.config_qgis import load_config
+    from surf_qgis.config_qgis import load_config
 
     run = build_run_config(**_base_kwargs(shorelines=[
         {"year": 2000, "path": "a.shp", "rmse_base": "1.0", "rmse_georef": "0.5", "rmse_interp": "0.3"},

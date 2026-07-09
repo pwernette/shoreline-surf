@@ -1,7 +1,7 @@
 """
 Shoreline Change Uncertainty — tkinter GUI
 ==========================================
-Stand-alone GUI wrapper for the ``shoreline_uncertainty`` Python package.
+Stand-alone GUI wrapper for the ``surf`` Python package.
 
 Usage::
 
@@ -11,7 +11,7 @@ Usage::
 The GUI mirrors every option in the YAML config schema.  A run config can be
 saved to / loaded from a YAML file so it is interchangeable with the CLI::
 
-    python -m shoreline_uncertainty.cli run --config my_config.yaml
+    python -m surf.cli run --config my_config.yaml
 """
 from __future__ import annotations
 
@@ -36,13 +36,13 @@ except ImportError:
     _HAS_YAML = False
 
 try:
-    from shoreline_uncertainty.config import (
+    from surf.config import (
         RunConfig,
         ShorelineYear,
         SiteConfig,
         load_config,
     )
-    from shoreline_uncertainty.pipeline import run_pipeline
+    from surf.pipeline import run_pipeline
     _HAS_PKG = True
 except ImportError:
     _HAS_PKG = False
@@ -703,7 +703,7 @@ class ShorelineUncertaintyApp(tk.Tk):
         if not _HAS_PKG:
             messagebox.showerror(
                 "Package not installed",
-                "shoreline_uncertainty is not installed.\n\n"
+                "surf is not installed.\n\n"
                 "From the repo root:\n  pip install -e .",
                 parent=self)
             return
@@ -974,13 +974,13 @@ class ShorelineUncertaintyApp(tk.Tk):
         if _HAS_PKG:
             try:
                 from importlib.metadata import version
-                pkg_ver = version("shoreline_uncertainty")
+                pkg_ver = version("surf")
             except Exception:
                 pkg_ver = "installed"
         messagebox.showinfo(
             APP_TITLE,
             f"{APP_TITLE}\n\n"
-            f"shoreline_uncertainty  v{pkg_ver}\n\n"
+            f"surf  v{pkg_ver}\n\n"
             "RMSE-based positional uncertainty and\n"
             "rate-of-change analysis for digitized shorelines.\n\n"
             "Based on Wernette et al. (2017, 2020).\n\n"
@@ -991,7 +991,7 @@ class ShorelineUncertaintyApp(tk.Tk):
     def _warn_no_package(self):
         messagebox.showwarning(
             "Package not installed",
-            "shoreline_uncertainty is not installed.\n\n"
+            "surf is not installed.\n\n"
             "Install from the repo root:\n"
             "  pip install -e .\n\n"
             "Config editing and YAML save/load are available,\n"

@@ -1,4 +1,4 @@
-"""QGIS-native port of shoreline_uncertainty/geometry_utils.py.
+"""QGIS-native port of surf/geometry_utils.py.
 
 Same shared geometry helpers (vertex-to-nearest-line distance stats, and
 dissolve/union) used by epsilon_bands_qgis, critical_areas_qgis, and

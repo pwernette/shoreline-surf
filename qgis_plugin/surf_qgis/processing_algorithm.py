@@ -3,7 +3,7 @@ pipeline and water-level lookup through QGIS's Processing framework (the
 Toolbox, batch processing, model designer, and `processing.run(...)` from
 the Python console) -- the same two operations the standalone package's CLI
 exposes as its `run` and `water-levels` subcommands (see
-shoreline_uncertainty/cli.py), but as Processing algorithms instead of CLI
+surf/cli.py), but as Processing algorithms instead of CLI
 subcommands.
 
 Both algorithms are deliberately config-file driven rather than exposing
@@ -60,7 +60,7 @@ class RunAnalysisAlgorithm(QgsProcessingAlgorithm):
         return self.tr("Shoreline Change Uncertainty")
 
     def groupId(self) -> str:
-        return "shoreline_uncertainty"
+        return "surf"
 
     def shortHelpString(self) -> str:
         return self.tr(
@@ -139,7 +139,7 @@ class WaterLevelLookupAlgorithm(QgsProcessingAlgorithm):
         return self.tr("Shoreline Change Uncertainty")
 
     def groupId(self) -> str:
-        return "shoreline_uncertainty"
+        return "surf"
 
     def shortHelpString(self) -> str:
         return self.tr(

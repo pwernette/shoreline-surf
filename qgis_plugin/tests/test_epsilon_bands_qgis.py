@@ -5,7 +5,7 @@ math is GEOS-backed, same as shapely."""
 import pytest
 from qgis.core import QgsGeometry, QgsPointXY
 
-from shoreline_uncertainty_qgis.epsilon_bands_qgis import (
+from surf_qgis.epsilon_bands_qgis import (
     grow_buffer_to_threshold,
     overlapping_double_buffer,
     run_odb_for_site,

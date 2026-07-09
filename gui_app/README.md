@@ -1,7 +1,7 @@
 # Shoreline Change Uncertainty — Standalone GUI
 
 A self-contained desktop application built from the same Python code as the
-`shoreline-uncertainty` CLI, with no ArcPy or QGIS dependency.
+`surf` CLI, with no ArcPy or QGIS dependency.
 
 ---
 
@@ -49,7 +49,7 @@ the full log to a text file or clear it between runs.
 pip install -e ".[dev]"          # install the analysis package in editable mode
 python -m gui_app                # launch the GUI
 # or via the CLI entry point:
-shoreline-uncertainty gui
+surf gui
 ```
 
 ---
@@ -89,7 +89,7 @@ The GUI reads and writes the same YAML config files used by the CLI:
 
 ```bash
 # Round-trip: open in GUI, tweak, save, then run headlessly
-shoreline-uncertainty run --config my_config.yaml
+surf run --config my_config.yaml
 ```
 
 File → Open YAML… loads an existing config into the form fields.  

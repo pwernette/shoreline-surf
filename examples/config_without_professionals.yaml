@@ -1,4 +1,4 @@
-# Example run configuration for shoreline_uncertainty -- WITHOUT a
+# Example run configuration for surf -- WITHOUT a
 # `professionals` block. Use this as a starting point when you only have one
 # analyst's shoreline delineations per year and don't need the
 # inter-analyst/"professional" comparison feature.
@@ -17,7 +17,7 @@
 # delineations for the same year, which this real dataset doesn't have).
 #
 # Run with:
-#   python -m shoreline_uncertainty.cli run --config examples/config_without_professionals.yaml
+#   python -m surf.cli run --config examples/config_without_professionals.yaml
 
 output_dir: examples/output_without_professionals
 

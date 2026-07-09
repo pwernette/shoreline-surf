@@ -16,8 +16,8 @@ from __future__ import annotations
 
 import pytest
 
-import shoreline_uncertainty_qgis.dialog as dialog_module
-from shoreline_uncertainty_qgis.plugin import ShorelineUncertaintyPlugin
+import surf_qgis.dialog as dialog_module
+from surf_qgis.plugin import ShorelineUncertaintyPlugin
 
 
 class _FakeIface:
@@ -73,7 +73,7 @@ def test_run_does_nothing_when_dialog_not_accepted(monkeypatch):
     def _fail_if_called(*a, **k):
         raise AssertionError("execute_run_config should not be called when the dialog was canceled")
 
-    monkeypatch.setattr("shoreline_uncertainty_qgis.runner.execute_run_config", _fail_if_called)
+    monkeypatch.setattr("surf_qgis.runner.execute_run_config", _fail_if_called)
 
     plugin = ShorelineUncertaintyPlugin(iface=_FakeIface())
     plugin.run()
@@ -93,7 +93,7 @@ def test_run_executes_and_reports_success_when_dialog_accepted(monkeypatch):
         return {"output_dir": "/tmp/out", "layers": [object(), object()]}
 
     monkeypatch.setattr(
-        "shoreline_uncertainty_qgis.runner.execute_run_config", _fake_execute_run_config
+        "surf_qgis.runner.execute_run_config", _fake_execute_run_config
     )
 
     plugin = ShorelineUncertaintyPlugin(iface=_FakeIface())
@@ -113,7 +113,7 @@ def test_run_reports_failure_when_execute_run_config_raises(monkeypatch):
     def _raise(*a, **k):
         raise RuntimeError("pipeline blew up")
 
-    monkeypatch.setattr("shoreline_uncertainty_qgis.runner.execute_run_config", _raise)
+    monkeypatch.setattr("surf_qgis.runner.execute_run_config", _raise)
 
     plugin = ShorelineUncertaintyPlugin(iface=_FakeIface())
     plugin.run()  # must not raise -- the failure is reported via QMessageBox, not propagated
@@ -132,7 +132,7 @@ def test_run_shows_placeholder_message_when_dialog_module_missing(monkeypatch):
     def _fake_import(name, *args, **kwargs):
         # `from .dialog import X` inside plugin.py resolves to __import__("dialog", ..., level=1),
         # not the fully-dotted module name -- match on the bare name actually passed.
-        if name in ("dialog", "shoreline_uncertainty_qgis.dialog"):
+        if name in ("dialog", "surf_qgis.dialog"):
             raise ImportError("dialog not built yet")
         return real_import(name, *args, **kwargs)
 

@@ -9,7 +9,7 @@ import pytest
 from pyproj import CRS
 from shapely.geometry import LineString
 
-from shoreline_uncertainty_qgis.io_utils_qgis import (
+from surf_qgis.io_utils_qgis import (
     ensure_projected,
     read_shoreline,
     utm_epsg_for,

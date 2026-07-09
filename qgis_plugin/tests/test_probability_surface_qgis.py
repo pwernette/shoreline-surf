@@ -11,7 +11,7 @@ from qgis.core import QgsGeometry, QgsPointXY
 from scipy import integrate
 from scipy.stats import norm
 
-from shoreline_uncertainty_qgis.probability_surface_qgis import (
+from surf_qgis.probability_surface_qgis import (
     change_probability_raster,
     change_probability_table,
     gaussian_overlap_probability,
@@ -22,8 +22,8 @@ from shoreline_uncertainty_qgis.probability_surface_qgis import (
     shoreline_change_probability_segments,
     signed_distance_raster,
 )
-from shoreline_uncertainty_qgis.raster_output_qgis import build_grid_transform
-from shoreline_uncertainty_qgis.transects_qgis import baseline_center_direction
+from surf_qgis.raster_output_qgis import build_grid_transform
+from surf_qgis.transects_qgis import baseline_center_direction
 
 
 def _line(coords):

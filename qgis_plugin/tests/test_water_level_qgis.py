@@ -17,7 +17,7 @@ from unittest.mock import MagicMock
 import pytest
 from qgis.core import QgsVectorLayer
 
-from shoreline_uncertainty_qgis import water_level_qgis as wl
+from surf_qgis import water_level_qgis as wl
 
 
 # ---------------------------------------------------------------------------

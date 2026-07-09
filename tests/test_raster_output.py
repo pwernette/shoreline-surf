@@ -2,8 +2,8 @@ import numpy as np
 import rasterio
 from shapely.geometry import LineString
 
-from shoreline_uncertainty.epsilon_bands import overlapping_double_buffer
-from shoreline_uncertainty.raster_output import (
+from surf.epsilon_bands import overlapping_double_buffer
+from surf.raster_output import (
     build_grid_transform,
     build_similarity_surface,
     rasterize_geometry,

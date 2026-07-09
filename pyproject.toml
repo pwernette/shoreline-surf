@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "shoreline-uncertainty"
+name = "shoreline-surf"
 version = "0.1.0"
-description = "Arcpy-free shoreline change analysis with positional uncertainty (Wernette et al. 2017, 2020)"
+description = "SURF: Shoreline Uncertainty and Rate Framework — arcpy-free shoreline change analysis with positional uncertainty (Wernette et al. 2017, 2020)"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
@@ -55,14 +55,13 @@ dev = ["pytest>=7.0"]
 examples = ["matplotlib>=3.7", "contextily>=1.5", "pillow>=10.0"]
 
 [project.urls]
-Homepage = "https://github.com/pwernett/shoreline_change_uncertainty"
-Repository = "https://github.com/pwernett/shoreline_change_uncertainty"
-"Bug Tracker" = "https://github.com/pwernett/shoreline_change_uncertainty/issues"
+Homepage = "https://github.com/pwernett/shoreline-surf"
+Repository = "https://github.com/pwernett/shoreline-surf"
+"Bug Tracker" = "https://github.com/pwernett/shoreline-surf/issues"
 DOI = "https://doi.org/10.5281/zenodo.21267871"
 
 [project.scripts]
-shoreline-uncertainty = "shoreline_uncertainty.cli:main"
+surf = "surf.cli:main"
 
 [tool.setuptools.packages.find]
-# gui_app is intentionally excluded from the PyPI distribution.
-include = ["shoreline_uncertainty*"]
+# gui_app is intentiona

@@ -1,11 +1,11 @@
-# Shoreline Change Analysis with Positional Uncertainty
+# SURF: Shoreline Uncertainty and Rate Framework
 
-[![PyPI version](https://img.shields.io/pypi/v/shoreline-uncertainty.svg)](https://pypi.org/project/shoreline-uncertainty/)
-[![Python versions](https://img.shields.io/pypi/pyversions/shoreline-uncertainty.svg)](https://pypi.org/project/shoreline-uncertainty/)
+[![PyPI version](https://img.shields.io/pypi/v/shoreline-surf.svg)](https://pypi.org/project/shoreline-surf/)
+[![Python versions](https://img.shields.io/pypi/pyversions/shoreline-surf.svg)](https://pypi.org/project/shoreline-surf/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21267871.svg)](https://doi.org/10.5281/zenodo.21267871)
 
-**Citation:** Wernette, P. (2026) pwernette/shoreline_change_uncertainty: Shoreline change analysis with positional uncertainty. Zenodo. [![DOI](assets/zenodo.21267871.svg)](https://doi.org/10.5281/zenodo.21267871)
+**Citation:** Wernette, P. (2026) SURF: Shoreline Uncertainty and Rate Framework (v0.1.0). Zenodo. [![DOI](assets/zenodo.21267871.svg)](https://doi.org/10.5281/zenodo.21267871)
 
 Shoreline change analysis that accounts for positional uncertainty, from a combination of:
 
@@ -35,7 +35,7 @@ Shoreline change analysis that accounts for positional uncertainty, from a combi
 
 From the input shorelines and associated uncertainties, the probability of the shoreline position is first computed as a probability surface, then the change-probability is computed for each year pair, and finally the End Point Rate and Linear Regression Rate statistics are computed along a denser transect grid. The output similarity-index and significant-change rasters are then computed from the probability surfaces, and the change-probability and rate-of-change statistics are written to a CSV.
 
-The `shoreline_uncertainty` package is a complete, **arcpy-free**
+**SURF** (Shoreline Uncertainty and Rate Framework) is a complete, **arcpy-free**
 reimplementation of the original ArcGIS Pro toolbox in
 `original_program/arcgis_pro/`. It runs anywhere Python runs, with no ESRI
 software required, using geopandas, shapely, pyproj, and rasterio (all
@@ -78,7 +78,7 @@ Given two or more years of shoreline vector data for a site, the pipeline:
    that the observed cross-shore change between two years is "real" rather
    than an artifact of positional uncertainty -- a continuous alternative to
    the binary significant/not-significant ODB/perkal test in step 2. See
-   `shoreline_uncertainty/probability_surface.py` for the math.
+   `surf/probability_surface.py` for the math.
 
 Everything is driven by one YAML or JSON configuration file -- no site names,
 years, or file paths are hardcoded, so the same pipeline runs on any number
@@ -89,14 +89,14 @@ of sites.
 **From PyPI** (recommended):
 
 ```bash
-pip install shoreline-uncertainty
+pip install shoreline-surf
 ```
 
 **From source** (for development or the latest unreleased changes):
 
 ```bash
-git clone https://github.com/pwernett/shoreline_change_uncertainty.git
-cd shoreline_change_uncertainty
+git clone https://github.com/pwernett/shoreline-surf.git
+cd shoreline-surf
 pip install -e .            # editable install
 pip install -e ".[dev]"     # + pytest for running the test suite
 ```
@@ -146,16 +146,16 @@ pip install pyinstaller
 python gui_app/build_exe.py
 ```
 
-The output lands in `dist_exe/ShorelineUncertainty/` as a folder containing the
+The output lands in `dist_exe/SURF/` as a folder containing the
 binary and all its dependencies:
 
 | Platform | Launch with |
 |---|---|
-| Windows | `dist_exe\ShorelineUncertainty\ShorelineUncertainty.exe` |
-| Linux | `dist_exe/ShorelineUncertainty/ShorelineUncertainty` |
-| macOS | `dist_exe/ShorelineUncertainty/ShorelineUncertainty` |
+| Windows | `dist_exe\SURF\SURF.exe` |
+| Linux | `dist_exe/SURF/SURF` |
+| macOS | `dist_exe/SURF/SURF` |
 
-Distribute the entire `dist_exe/ShorelineUncertainty/` folder (zip it, or wrap
+Distribute the entire `dist_exe/SURF/` folder (zip it, or wrap
 it with an installer like NSIS on Windows or AppImage on Linux).
 
 To build the PyPI wheel separately (they go in `dist_pypi/` and don't conflict):
@@ -194,7 +194,7 @@ The window has three tabs:
 format used by the CLI, so any config built in the GUI can be run headlessly:
 
 ```bash
-python -m shoreline_uncertainty.cli run --config my_config.yaml
+python -m surf.cli run --config my_config.yaml
 ```
 
 ## Quickstart
@@ -210,13 +210,13 @@ python examples/generate_synthetic_data.py
 #    (synthetic data), one without it (real historical data), and one
 #    demonstrating the continuous prob_change probability surfaces (same
 #    real historical data).
-shoreline-uncertainty run --config examples/config_with_professionals.yaml --verbose
-shoreline-uncertainty run --config examples/config_without_professionals.yaml --verbose
-shoreline-uncertainty run --config examples/config_prob_change.yaml --verbose
+surf run --config examples/config_with_professionals.yaml --verbose
+surf run --config examples/config_without_professionals.yaml --verbose
+surf run --config examples/config_prob_change.yaml --verbose
 
 # If you name your config file config.yaml (or config.yml) and run from its
 # directory, --config can be omitted entirely:
-#   cd my_project && shoreline-uncertainty run
+#   cd my_project && surf run
 ```
 
 Outputs are written under `<output_dir>/<site_name>/` (each example config
@@ -269,7 +269,7 @@ There are two ways to turn on the continuous probability surfaces (see
 the vertical DEM change-probability approach in Wernette et al. (2020),
 "What is 'real'? Identifying erosion and deposition in context of
 spatially-variable uncertainty" (included in this repo as a PDF). The math
-lives in `shoreline_uncertainty/probability_surface.py`:
+lives in `surf/probability_surface.py`:
 
 - `epsilon_band_method: prob_change` -- standalone shorthand: runs *only*
   the probability surfaces, swapping out the binary ODB/perkal significance
@@ -330,7 +330,7 @@ convention as `EPR_NET_DISTANCE` below) read off the nearest general-purpose
 transect to that segment's midpoint, via `transects.nearest_transect_net_distance`.
 
 Controlled by `prob_change_segment_length` (default **50m**); see
-`shoreline_uncertainty/probability_surface.py`'s `segment_line` and
+`surf/probability_surface.py`'s `segment_line` and
 `shoreline_change_probability_segments` for the implementation.
 
 ### End Point Rate / Linear Regression Rate
@@ -342,7 +342,7 @@ statistics, computed along a separate, denser transect grid (see each
 site's `rate_transect_spacing`, default **1m** -- independent of
 `transect_spacing`, which drives the general-purpose `transects.shp`/
 `transect_distances_wide.csv` outputs). The math lives in
-`shoreline_uncertainty/rate_of_change.py`.
+`surf/rate_of_change.py`.
 
 - **EPR (End Point Rate)** -- uses only the oldest and youngest shoreline
   years at each transect: `EPR_NET_DISTANCE` is the raw along-transect
@@ -390,7 +390,7 @@ carries:
 Transect pairs with a gap in the sequential `transect_id` (e.g. a transect
 that never intersected a shoreline) are skipped, since that polygon would
 span a discontinuity in the grid rather than a true adjacent gap. See
-`build_rate_change_polygons` in `shoreline_uncertainty/rate_of_change.py`
+`build_rate_change_polygons` in `surf/rate_of_change.py`
 for the implementation.
 
 ### Water-level lookup (`water-levels` subcommand)
@@ -402,7 +402,7 @@ API](https://api.tidesandcurrents.noaa.gov) -- the one API that covers both
 Great Lakes and marine/coastal stations:
 
 ```bash
-python -m shoreline_uncertainty.cli water-levels --config examples/config_without_professionals.yaml
+python -m surf.cli water-levels --config examples/config_without_professionals.yaml
 ```
 
 This walks every shoreline year in the config, finds the nearest CO-OPS
@@ -432,7 +432,7 @@ etc.) -- a failure on one shoreline never aborts the whole run.
 
 This subcommand makes live network calls and is the one part of this
 package that does -- the `run` pipeline and its 135+ tests stay
-offline/deterministic by design (see `shoreline_uncertainty/water_level.py`
+offline/deterministic by design (see `surf/water_level.py`
 for the full rationale). It's also intentionally **not** folded into
 `uncertainty.py`'s RMSE_O automatically: the three Wernette et al. (2017)
 RMSE components (base map, georeferencing, interpretation) don't include a
@@ -538,7 +538,7 @@ changes.
 ## Package layout
 
 ```
-shoreline_uncertainty/
+surf/
   config.py               run/site configuration (dataclasses + YAML/JSON loader)
   uncertainty.py           RMSE / positional-uncertainty calculations (Eqs. 1-3)
   epsilon_bands.py         ODB (Eq. 4) + legacy Perkal-style significance testing
@@ -558,7 +558,7 @@ gui_app/
   __init__.py              package marker
   __main__.py              entry point: python -m gui_app
   app.py                   main tkinter application (Settings / Sites / Log tabs)
-  build_exe.py             PyInstaller build script → dist/ShorelineUncertainty(.exe)
+  build_exe.py             PyInstaller build script → dist/SURF(.exe)
 ```
 
 `original_program/arcgis_pro/` is left untouched as a historical reference;
@@ -569,26 +569,27 @@ it requires ArcGIS Pro (arcpy) and is not used by anything in this package.
 If you use this code in your research, please cite it as:
 
 **APA:**
-Wernette, P. (2026) pwernette/shoreline_change_uncertainty: Shoreline change analysis with positional uncertainty. Zenodo. [https://doi.org/10.5281/zenodo.21267871](https://doi.org/10.5281/zenodo.21267871)
+Wernette, P. (2026) SURF: Shoreline Uncertainty and Rate Framework (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.21267871
 
 **BibTeX:**
 ```bibtex
-@software{wernette2026shoreline,
-  author = {Wernette, Phillipe},
-  title = {pwernette/shoreline_change_uncertainty: Shoreline change analysis with positional uncertainty},
-  year = {2026},
-  doi = {10.5281/zenodo.21267871},
+@software{wernette2026surf,
+  author    = {Wernette, Phillipe},
+  title     = {{SURF}: {S}horeline {U}ncertainty and {R}ate {F}ramework},
+  year      = {2026},
+  version   = {0.1.0},
+  doi       = {10.5281/zenodo.21267871},
   publisher = {Zenodo},
-  url = {https://github.com/pwernett/shoreline_change_uncertainty}
+  url       = {https://github.com/pwernett/shoreline-surf}
 }
 ```
 
 **MLA:**
-Wernette, P. "pwernette/shoreline_change_uncertainty: Shoreline change analysis with positional uncertainty." Zenodo, 2026, [https://doi.org/10.5281/zenodo.21267871](https://doi.org/10.5281/zenodo.21267871)
+Wernette, P. "SURF: Shoreline Uncertainty and Rate Framework." Zenodo, 2026, https://doi.org/10.5281/zenodo.21267871
 
 Please also cite the original research papers on which this code is based:
 
-> Wernette, P., A. Shortridge, D. Lusch, and A.F. Arbogast. (2017) Accounting for positional uncertainty in historical shoreline change analysis without ground-reference information. *International Journal of Remote Sensing*, 38(13), 3906-3922. [https://doi.org/10.1080/01431161.2016.1200728](https://doi.org/10.1080/01431161.2016.1200728)
+> Wernette, P., A. Shortridge, D. Lusch, and A.F. Arbogast. (2017) Accounting for positional uncertainty in historical shoreline change analysis without ground-reference information. *International Journal of Remote Sensing*, 38(13), 3906-3922. [https://doi.org/10.1080/01431161.2017.1303218](https://doi.org/10.1080/01431161.2017.1303218)
 
 > Wernette, P., J. Lehner, and C. Houser. (2020) What change is 'real'? A probabilistic approach to accounting for uncertainty in environmental change analysis. *Geomorphology*, 355, 107083. [https://doi.org/10.1016/j.geomorph.2020.107083](https://doi.org/10.1016/j.geomorph.2020.107083)
 

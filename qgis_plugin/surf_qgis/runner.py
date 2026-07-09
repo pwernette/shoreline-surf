@@ -52,7 +52,7 @@ def execute_run_config(
     if feedback is None:
         feedback = QgsProcessingFeedback()
 
-    tmp_dir = Path(tempfile.mkdtemp(prefix="shoreline_uncertainty_"))
+    tmp_dir = Path(tempfile.mkdtemp(prefix="surf_"))
     config_path = tmp_dir / "run_config.yaml"
     write_run_config(run, config_path)
 

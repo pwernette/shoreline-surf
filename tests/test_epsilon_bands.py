@@ -1,7 +1,7 @@
 import pytest
 from shapely.geometry import LineString
 
-from shoreline_uncertainty.epsilon_bands import (
+from surf.epsilon_bands import (
     grow_buffer_to_threshold,
     overlapping_double_buffer,
     run_odb_for_site,

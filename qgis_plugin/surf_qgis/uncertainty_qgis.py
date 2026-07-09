@@ -1,11 +1,11 @@
 """Positional uncertainty (RMSE) calculations for the QGIS plugin's pipeline.
 
-Verbatim copy of shoreline_uncertainty/uncertainty.py (pure math/
+Verbatim copy of surf/uncertainty.py (pure math/
 dataclasses, zero geopandas/shapely/qgis dependency) -- only the import of
 ShorelineYear/UncertaintyComponents is changed, from `.config` to
 `.config_qgis`, so this module depends only on this package's own
 self-contained config_qgis.py rather than the separate standalone package.
-See shoreline_uncertainty/uncertainty.py for the full original docstrings.
+See surf/uncertainty.py for the full original docstrings.
 
 Replaces original_program/arcgis_pro/add_field.py, which only added an empty
 'UNCERTAINTY' float attribute to each shoreline feature class for an analyst

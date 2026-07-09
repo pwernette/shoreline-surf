@@ -1,9 +1,9 @@
-# Example run configuration for shoreline_uncertainty -- demonstrates the
+# Example run configuration for surf -- demonstrates the
 # continuous probabilistic position / change-probability surfaces via the
 # standalone `epsilon_band_method: prob_change` shorthand (the
 # horizontal-direction analogue of Wernette et al. (2020)'s vertical DEM
 # change-probability approach). See
-# shoreline_uncertainty/probability_surface.py for the underlying math.
+# surf/probability_surface.py for the underlying math.
 #
 # This is the "prob_change only, nothing else" form. To get BOTH the ODB
 # similarity_index/significant_change rasters AND these Gaussian probability
@@ -17,7 +17,7 @@
 # against the same input shorelines and uncertainty values.
 #
 # Run with:
-#   python -m shoreline_uncertainty.cli run --config examples/config_prob_change.yaml
+#   python -m surf.cli run --config examples/config_prob_change.yaml
 
 output_dir: examples/output_prob_change
 

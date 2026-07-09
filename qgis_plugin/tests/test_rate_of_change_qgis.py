@@ -11,13 +11,13 @@ import pandas as pd
 import pytest
 from qgis.core import QgsGeometry, QgsPointXY
 
-from shoreline_uncertainty_qgis.rate_of_change_qgis import (
+from surf_qgis.rate_of_change_qgis import (
     build_rate_change_polygons,
     compute_rate_of_change,
     end_point_rate,
     linear_regression_rate,
 )
-from shoreline_uncertainty_qgis.transects_qgis import Transect
+from surf_qgis.transects_qgis import Transect
 
 
 def _line(coords):

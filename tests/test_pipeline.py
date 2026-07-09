@@ -8,9 +8,9 @@ import pandas as pd
 import pytest
 import rasterio
 
-from shoreline_uncertainty.config import RunConfig, ShorelineYear, SiteConfig
-from shoreline_uncertainty.pipeline import run_pipeline
-from shoreline_uncertainty.transects import Transect, nearest_transect_net_distance
+from surf.config import RunConfig, ShorelineYear, SiteConfig
+from surf.pipeline import run_pipeline
+from surf.transects import Transect, nearest_transect_net_distance
 
 
 def _build_run_config(
@@ -273,7 +273,7 @@ def test_run_pipeline_perkal_writes_critical_areas(synthetic_site, tmp_path):
 
 
 def test_run_pipeline_with_professionals_writes_comparison_tables(synthetic_site, synthetic_professionals, tmp_path):
-    from shoreline_uncertainty.config import ProfessionalDelineation
+    from surf.config import ProfessionalDelineation
 
     output_dir = tmp_path / "pipeline_out_prof"
     professionals = [

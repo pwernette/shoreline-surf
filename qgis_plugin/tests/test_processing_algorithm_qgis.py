@@ -25,10 +25,10 @@ import pandas as pd
 import pytest
 from qgis.core import QgsProcessingException, QgsProcessingFeedback
 
-from shoreline_uncertainty_qgis import water_level_qgis as wl
-from shoreline_uncertainty_qgis.config_qgis import RunConfig, ShorelineYear, SiteConfig
-from shoreline_uncertainty_qgis.dialog import write_run_config
-from shoreline_uncertainty_qgis.processing_algorithm import RunAnalysisAlgorithm, WaterLevelLookupAlgorithm
+from surf_qgis import water_level_qgis as wl
+from surf_qgis.config_qgis import RunConfig, ShorelineYear, SiteConfig
+from surf_qgis.dialog import write_run_config
+from surf_qgis.processing_algorithm import RunAnalysisAlgorithm, WaterLevelLookupAlgorithm
 
 
 def _build_run_config(synthetic_site, output_dir):
@@ -59,7 +59,7 @@ def _build_run_config(synthetic_site, output_dir):
 def test_run_analysis_algorithm_metadata():
     alg = RunAnalysisAlgorithm()
     assert alg.name() == "run_analysis"
-    assert alg.groupId() == "shoreline_uncertainty"
+    assert alg.groupId() == "surf"
     alg.initAlgorithm()
     names = {p.name() for p in alg.parameterDefinitions()}
     assert names == {"CONFIG", "OUTPUT_DIR"}
@@ -146,7 +146,7 @@ def test_water_level_lookup_algorithm_metadata():
 def test_water_level_lookup_algorithm_writes_csv(synthetic_site, tmp_path, monkeypatch):
     monkeypatch.setattr(time, "sleep", lambda *_: None)
     monkeypatch.setattr(
-        "shoreline_uncertainty_qgis.processing_algorithm.get_annual_water_level",
+        "surf_qgis.processing_algorithm.get_annual_water_level",
         lambda *a, **k: _annual_result(),
     )
 
@@ -174,7 +174,7 @@ def test_water_level_lookup_algorithm_writes_csv(synthetic_site, tmp_path, monke
 def test_water_level_lookup_algorithm_default_out_path(synthetic_site, tmp_path, monkeypatch):
     monkeypatch.setattr(time, "sleep", lambda *_: None)
     monkeypatch.setattr(
-        "shoreline_uncertainty_qgis.processing_algorithm.get_annual_water_level",
+        "surf_qgis.processing_algorithm.get_annual_water_level",
         lambda *a, **k: _annual_result(),
     )
 
@@ -200,7 +200,7 @@ def test_water_level_lookup_algorithm_records_errors_per_row(synthetic_site, tmp
         raise wl.WaterLevelError("no nearby station")
 
     monkeypatch.setattr(time, "sleep", lambda *_: None)
-    monkeypatch.setattr("shoreline_uncertainty_qgis.processing_algorithm.get_annual_water_level", _raise)
+    monkeypatch.setattr("surf_qgis.processing_algorithm.get_annual_water_level", _raise)
 
     output_dir = tmp_path / "pipeline_out"
     run = _build_run_config(synthetic_site, output_dir)

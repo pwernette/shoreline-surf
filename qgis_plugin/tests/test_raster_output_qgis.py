@@ -5,8 +5,8 @@ import numpy as np
 import rasterio
 from qgis.core import QgsGeometry, QgsPointXY
 
-from shoreline_uncertainty_qgis.epsilon_bands_qgis import overlapping_double_buffer
-from shoreline_uncertainty_qgis.raster_output_qgis import (
+from surf_qgis.epsilon_bands_qgis import overlapping_double_buffer
+from surf_qgis.raster_output_qgis import (
     build_grid_transform,
     build_similarity_surface,
     rasterize_geometry,
