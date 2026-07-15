@@ -1,0 +1,75 @@
+name: Update CHANGELOG on release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepend release to CHANGELOG.md
+        env:
+          TAG:  ${{ github.event.release.tag_name }}
+          DATE: ${{ github.event.release.published_at }}
+          BODY: ${{ github.event.release.body }}
+        run: |
+          # Format: YYYY-MM-DD from the ISO timestamp
+          RELEASE_DATE=$(echo "$DATE" | cut -c1-10)
+
+          # Build the new entry
+          NEW_ENTRY="## [$TAG] — $RELEASE_DATE
+
+$BODY
+
+---
+
+"
+          # Prepend after the header block (first blank line after the preamble)
+          python3 - <<'PYEOF'
+          import os
+
+          tag  = os.environ["TAG"]
+          date = os.environ["DATE"][:10]
+          body = os.environ["BODY"].strip()
+
+          entry = f"## [{tag}] — {date}\n\n{body}\n\n---\n\n"
+
+          with open("CHANGELOG.md", "r") as f:
+              content = f.read()
+
+          # Insert after the first "---\n\n" separator (end of the header block)
+          marker = "---\n\n"
+          idx = content.find(marker)
+          if idx == -1:
+              new_content = content + entry
+          else:
+              insert_at = idx + len(marker)
+              new_content = content[:insert_at] + entry + content[insert_at:]
+
+          # Append the comparison link at the bottom
+          link = f"[{tag}]: https://github.com/${{ github.repository }}/releases/tag/{tag}\n"
+          if link not in new_content:
+              new_content = new_content.rstrip("\n") + "\n" + link + "\n"
+
+          with open("CHANGELOG.md", "w") as f:
+              f.write(new_content)
+
+          print(f"Prepended release {tag} ({date}) to CHANGELOG.md")
+          PYEOF
+
+      - name: Commit updated CHANGELOG.md
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git diff --cached --quiet || git commit -m "docs: update CHANGELOG for ${{ github.event.release.tag_name }}"
+          git push
